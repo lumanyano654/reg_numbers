@@ -1,0 +1,26 @@
+{
+  "name": "reg_numbers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dependency": "^0.0.1",
+    "express": "^4.17.1",
+    "express-flash": "0.0.2",
+    "express-handlebars": "^5.1.0",
+    "express-session": "^1.17.1",
+    "pg": "^8.4.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

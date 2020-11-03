@@ -1,0 +1,52 @@
+<div class="container">
+
+    <form action="/regnumbers" method="POST">
+        <div class="heading">
+            <h1>REGISTRATION NUMBERS</h1>
+        </div>
+
+        <div class="examples">
+            <h2>e.g CA 122 423 | CY 121 432 | CL 452</h2>
+        </div>
+
+
+        <div class="textbox">
+            <input type="text" name="reg_input" placeholder="enter a reg number...">
+        </div>
+
+        <div class="button">
+            <input type="submit" class="button-primary" value="Add Registration">
+        </div>
+
+
+        <div class="filter">
+            <h3>Please Select a Town:</h3>
+            <div class="selectTown">
+                <select name="towns" class="towns">
+                    <option value="ALL">All Towns</option>
+                    <option value="CA">Cape Town</option>
+                    <option value="CL">Stellenbosch</option>
+                    <option value="CY">Belville</option>
+                </select>
+            </div>
+
+        </div>
+        <br>
+
+        <div>
+            <ul class="display">{{#each reg_id}}
+                <li>
+                    {{reg_id}}
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+    </form>
+
+    <div class="buttons">
+        <a href="http:/"><button class="button-primary" type="submit" name="buttons1">Reset</button> </a>
+
+        <a href="http:/"><button class="button-primary" type="submit" name="buttons1">Filter</button> </a>
+    </div>
+    <hr>
+</div>
