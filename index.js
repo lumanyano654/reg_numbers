@@ -14,6 +14,8 @@ const pool = new Pool({
   connectionString
 });
 
+process.env.PORT
+process.env.DATABASE_URL
 
 let app = express();
 
