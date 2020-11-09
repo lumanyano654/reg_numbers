@@ -19,7 +19,7 @@ process.env.DATABASE_URL
 
 let app = express();
 
-const regNumber = regNumberFact(pool)
+let regNumber = regNumberFact(pool)
 
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
@@ -46,25 +46,57 @@ app.get("/", function (req, res) {
 app.post("/regnumbers", async function (req, res) {
   var town = req.body.reg_input
 
+  var town = town.toUpperCase()
+
   await regNumber.setlocation(town)
 
-  const setlocation = await regNumber.getlocation();
-  console.log(setlocation)
+  var checkDuplicates = await regNumber.checkDuplicates(town)
+
+  var getlocation = await regNumber.getlocation();
+
+ 
+
+
+  if (!town){
+    req.flash('info', 'enter registration numbers')
+  }
+
+  else if (checkDuplicates !== 0) {
+    var getlocation = await regNumber.getlocation();
+    req.flash("info", "registration number already exists")
+  }
+  
+  else if (!town.startsWith("CA ") || !town.startsWith("CY ") || !town.startsWith("CL ")) {
+    req.flash('info', 'enter a valid registration')
+  }
+
   res.render("index", {
-    reg_id: setlocation
+    reg_numbers: getlocation
   })
 })
 
-app.get('/reset', function (req, res) {
+app.get("/regnumbers", async function (req, res) {
 
-  res.render('index')
+  var towns = req.query.selectedTowns
+
+  
+  console.log(towns);
+  
+  var filter = await regNumber.filter(towns)
+  console.log(filter)
+
+  res.render("index", {
+    reg_numbers: filter
+  });
+});
+
+app.get('/reset', async function (req, res) {
+  await regNumber.reset();
+
+  res.redirect('/')
 })
 
-app.get("/filter", function (req, res) {
 
-
-  res.render("index");
-});
 
 
 

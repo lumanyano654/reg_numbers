@@ -8,8 +8,10 @@
         <div class="examples">
             <h2>e.g CA 122 423 | CY 121 432 | CL 452</h2>
         </div>
-
-
+        <div class="flash">
+            {{messages.info}}
+        </div>
+        <br>
         <div class="textbox">
             <input type="text" name="reg_input" placeholder="enter a reg number...">
         </div>
@@ -17,36 +19,35 @@
         <div class="button">
             <input type="submit" class="button-primary" value="Add Registration">
         </div>
+    </form>
 
-
+    <form action="/regnumbers" method="GET">
         <div class="filter">
             <h3>Please Select a Town:</h3>
             <div class="selectTown">
-                <select name="towns" class="towns">
+                <select id="filterThingy" name="selectedTowns" class="towns">
                     <option value="ALL">All Towns</option>
-                    <option value="CA">Cape Town</option>
-                    <option value="CL">Stellenbosch</option>
-                    <option value="CY">Belville</option>
+                    <option value="1">Cape Town</option>
+                    <option value="2">Stellenbosch</option>
+                    <option value="3">Belville</option>
                 </select>
             </div>
 
-        </div>
-        <br>
+            <br>
+            <button type="submit" class="button-primary2">Filter</button>
+            {{!-- <input type="submit" class="button-primary2" value="filter"> --}}
 
-        <div>
-            <ul class="display">{{#each reg_id}}
-                <li>
-                    {{reg_id}}
-                </li>
-                {{/each}}
-            </ul>
-        </div>
     </form>
+    <a href="/reset" class="link"> reset </a>
+</div>
+<br>
 
-    <div class="buttons">
-        <a href="http:/"><button class="button-primary" type="submit" name="buttons1">Reset</button> </a>
+<ul>
+    {{#each reg_numbers}}
+    <li>{{reg_numbers}}</li>
 
-        <a href="http:/"><button class="button-primary" type="submit" name="buttons1">Filter</button> </a>
-    </div>
-    <hr>
+    {{/each}}
+</ul>
+
+<hr>
 </div>
