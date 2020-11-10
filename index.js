@@ -48,23 +48,25 @@ app.post("/regnumbers", async function (req, res) {
 
   var town = town.toUpperCase()
 
-  await regNumber.setlocation(town)
-
+  
   var checkDuplicates = await regNumber.checkDuplicates(town)
 
-  var getlocation = await regNumber.getlocation();
+  
 
  
+if (checkDuplicates !== 0) {
+  req.flash("info", "registration number already exists")
+}
 
+else if(town){
+  await regNumber.setlocation(town)
+  var getlocation = await regNumber.getlocation();
+}
 
-  if (!town){
+else  if (!town){
     req.flash('info', 'enter registration numbers')
   }
 
-  else if (checkDuplicates !== 0) {
-    var getlocation = await regNumber.getlocation();
-    req.flash("info", "registration number already exists")
-  }
   
   else if (!town.startsWith("CA ") || !town.startsWith("CY ") || !town.startsWith("CL ")) {
     req.flash('info', 'enter a valid registration')
