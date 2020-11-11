@@ -1,14 +1,13 @@
 module.exports = function regNumbers(pool) {
   async function setlocation(town) {
     town = town.toUpperCase();
-    console.log(town);
 
     var duplicate = await pool.query(
       "select reg_numbers from registration_numbers where reg_numbers = $1",
       [town]
     );
 
-    if (town) {
+    if (town.length <= 10 ) {
       if (duplicate.rowCount === 0) {
         var substring = town.substring(0, 2);
 
@@ -18,8 +17,6 @@ module.exports = function regNumbers(pool) {
         );
 
         const townIds = townId.rows[0].id;
-
-        console.log(townIds);
 
         var town_id = await pool.query(
           "INSERT INTO registration_numbers(reg_numbers,town_code)values($1, $2)",

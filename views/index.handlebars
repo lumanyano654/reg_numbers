@@ -1,4 +1,8 @@
 <div class="container">
+    <div class="lines">
+  <div class="line"></div>
+  <div class="line"></div>
+  <div class="line"></div>
 
     <form action="/regnumbers" method="POST">
         <div class="heading">
@@ -6,10 +10,13 @@
         </div>
 
         <div class="examples">
-            <h2>e.g CA 122 423 | CY 121 432 | CL 452</h2>
+            <h2>e.g CA 122 423 | CY 121 432 | CL 452 464</h2>
         </div>
         <div class="flash">
             {{messages.info}}
+        </div>
+        <div class="success">
+            {{messages.success}}
         </div>
         <br>
         <div class="textbox">
@@ -32,22 +39,19 @@
                     <option value="3">Belville</option>
                 </select>
             </div>
-
             <br>
             <button type="submit" class="button-primary2">Filter</button>
             {{!-- <input type="submit" class="button-primary2" value="filter"> --}}
 
     </form>
     <a href="/reset" class="link"> reset </a>
+    <ul>
+        {{#each reg_numbers}}
+        <li>{{reg_numbers}}</li>
+
+        {{/each}}
+    </ul>
+
 </div>
-<br>
-
-<ul>
-    {{#each reg_numbers}}
-    <li>{{reg_numbers}}</li>
-
-    {{/each}}
-</ul>
-
-<hr>
+</div>
 </div>
