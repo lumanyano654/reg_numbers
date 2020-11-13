@@ -1,4 +1,5 @@
 module.exports = function regNumbers(pool) {
+  
   async function setlocation(town) {
     town = town.toUpperCase();
 
@@ -57,7 +58,7 @@ module.exports = function regNumbers(pool) {
       "select reg_numbers from registration_numbers where reg_numbers = $1",
       [town]
     );
-    console.log(checkDuplicates);
+  
 
     return checkDuplicates.rowCount;
   }

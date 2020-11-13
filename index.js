@@ -50,29 +50,26 @@ app.get("/", function (req, res) {
 
 app.post("/regnumbers", async function (req, res) {
   var town = req.body.reg_input;
-  console.log(!town, town == "", town.length < 1);
+  console.log(!town, town == "", town.length < 1, !town.startsWith("1 "));
 
   var town = town.toUpperCase();
   var checkDuplicates = await regNumber.checkDuplicates(town);
 
-  if (checkDuplicates !== 0) {
+  if (town.length > 10) {
+    req.flash("info", "Your registration must have less characters");
+  } else if (checkDuplicates !== 0) {
     req.flash("info", "registration number already exists");
   } else if (town == "") {
     req.flash("info", "Enter registration number");
-  } else if (
-    !town.startsWith("CA ") ||
-    !town.startsWith("CY ") ||
-    !town.startsWith("CL ")
-  ) {
-    req.flash(
-      "info",
-      "This is not a registration number. Can you please enter the correct registration number"
-    );
   } else if (town) {
     await regNumber.setlocation(town);
     var getlocation = await regNumber.getlocation();
-  } else if (town.length <= 10) {
-    req.flash("info", "Your registration must have less characters");
+  } else if (
+    !town.startsWith("1 ") ||
+    !town.startsWith("2 ") ||
+    !town.startsWith("3 ")
+  ) {
+    req.flash("info", "This is not a registration number");
   }
 
   res.render("index", {
