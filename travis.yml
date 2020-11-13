@@ -1,0 +1,14 @@
+language: node_js
+
+env:
+  - DATABASE_URL=postgresql://postgres@localhost:5432/regnumbers_tests
+
+node_js:  
+  - "12"
+
+before_script:
+  - psql -c 'create database  regnumbers_tests;' -U postgres
+  - psql -U postgres -d regnumbers_tests -a -f regNumbers.sql
+
+services:
+  - postgresql
