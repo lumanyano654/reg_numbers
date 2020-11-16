@@ -17,33 +17,33 @@ describe("The registration numbers webapp", function () {
   });
 
   it("should be able to insert registration numbers", async function () {
-    await regNumber.setlocation("CA 123 456");
+    await regNumber.addRegNumber("CA 123 456");
 
-    const getlocation = await regNumber.getlocation();
+    const getRegNumbers = await regNumber.getRegNumbers();
     assert.deepEqual(
       [
         {
           reg_numbers: "CA 123 456",
         },
       ],
-      getlocation
+      getRegNumbers
     );
   });
 
   it("should be able reset the database", async function () {
-    await regNumber.setlocation("CA 123 435");
-    await regNumber.setlocation("CA 123 742");
-    await regNumber.setlocation("CA 123 678");
+    await regNumber.addRegNumber("CA 123 435");
+    await regNumber.addRegNumber("CA 123 742");
+    await regNumber.addRegNumber("CA 123 678");
 
     const resetdb = await regNumber.reset();
 
-    assert.equal(undefined, resetdb);
+    assert.equal("", await regNumber.getRegNumbers());
   });
 
   it("should be able to show if its Cape Town", async function () {
-    await regNumber.setlocation("CA 123 678");
-    await regNumber.setlocation("CL 123 678");
-    await regNumber.setlocation("CY 123 678");
+    await regNumber.addRegNumber("CA 123 678");
+    await regNumber.addRegNumber("CL 123 678");
+    await regNumber.addRegNumber("CY 123 678");
 
     assert.deepEqual(await regNumber.filter(1), [
       { reg_numbers: "CA 123 678" },
@@ -51,9 +51,9 @@ describe("The registration numbers webapp", function () {
   });
 
   it("should be able to show if its from Bellville", async function () {
-    await regNumber.setlocation("CL 123 678");
-    await regNumber.setlocation("CL 123 679");
-    await regNumber.setlocation("CY 364 498");
+    await regNumber.addRegNumber("CL 123 678");
+    await regNumber.addRegNumber("CL 123 679");
+    await regNumber.addRegNumber("CY 364 498");
 
     assert.deepEqual(await regNumber.filter(2), [
       { reg_numbers: "CY 364 498" },
@@ -61,9 +61,9 @@ describe("The registration numbers webapp", function () {
   });
 
   it("should be able to show if its from Stellenbosch", async function () {
-    await regNumber.setlocation("CL 123 678");
-    await regNumber.setlocation("CL 123 679");
-    await regNumber.setlocation("CY 364 498");
+    await regNumber.addRegNumber("CL 123 678");
+    await regNumber.addRegNumber("CL 123 679");
+    await regNumber.addRegNumber("CY 364 498");
 
     assert.deepEqual(await regNumber.filter(3), [
       { reg_numbers: "CL 123 678" },
@@ -72,8 +72,8 @@ describe("The registration numbers webapp", function () {
   });
 
   it("should be able to show if its does check duplicates", async function () {
-    await regNumber.setlocation("CL 123 678");
-    await regNumber.setlocation("CL 123 679");
+    await regNumber.addRegNumber("CL 123 678");
+    await regNumber.addRegNumber("CL 123 679");
     
     const duplicates = await regNumber.checkDuplicates("CL 123 678");
     assert.equal(1, duplicates);

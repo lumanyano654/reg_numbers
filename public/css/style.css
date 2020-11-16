@@ -1,13 +1,13 @@
 body {
     box-sizing: border-box;
-    
+    background: linear-gradient(110deg, #fdcd3b 60%, #ffed4b 60%);
 }
 
 .container {
     background-color: transparent;
     text-align: center;
     border-radius: 3px;
-    background: linear-gradient(110deg, #fdcd3b 60%, #ffed4b 60%);
+    
 
     top: 10%;
     left: 10%;

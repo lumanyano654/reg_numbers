@@ -44,14 +44,13 @@ app.use(
 
 app.use(flash());
 
-app.get("/", function (req, res) {
-  res.render("index");
+app.get("/", async function (req, res) {
+  var reg_numbers = await regNumber.getRegNumbers();
+  res.render("index", {reg_numbers});
 });
 
 app.post("/regnumbers", async function (req, res) {
   var town = req.body.reg_input;
-  console.log(!town, town == "", town.length < 1, !town.startsWith("1 "));
-
   var town = town.toUpperCase();
   var checkDuplicates = await regNumber.checkDuplicates(town);
 
@@ -62,8 +61,7 @@ app.post("/regnumbers", async function (req, res) {
   } else if (town == "") {
     req.flash("info", "Enter registration number");
   } else if (town) {
-    await regNumber.setlocation(town);
-    var getlocation = await regNumber.getlocation();
+    await regNumber.addRegNumber(town);
   } else if (
     !town.startsWith("1 ") ||
     !town.startsWith("2 ") ||
@@ -72,9 +70,8 @@ app.post("/regnumbers", async function (req, res) {
     req.flash("info", "This is not a registration number");
   }
 
-  res.render("index", {
-    reg_numbers: getlocation,
-  });
+  res.redirect("/");
+  
 });
 
 app.get("/regnumbers", async function (req, res) {

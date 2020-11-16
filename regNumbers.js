@@ -1,6 +1,6 @@
 module.exports = function regNumbers(pool) {
   
-  async function setlocation(town) {
+  async function addRegNumber(town) {
     town = town.toUpperCase();
 
     var duplicate = await pool.query(
@@ -27,7 +27,7 @@ module.exports = function regNumbers(pool) {
     }
   }
 
-  async function getlocation() {
+  async function getRegNumbers() {
     const showTown = await pool.query(
       "select reg_numbers from registration_numbers"
     );
@@ -64,8 +64,8 @@ module.exports = function regNumbers(pool) {
   }
 
   return {
-    getlocation,
-    setlocation,
+    getRegNumbers,
+    addRegNumber,
     reset,
     filter,
     checkDuplicates,
