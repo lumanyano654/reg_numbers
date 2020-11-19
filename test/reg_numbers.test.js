@@ -79,6 +79,19 @@ describe("The registration numbers webapp", function () {
     assert.equal(1, duplicates);
   });
 
+  it("regex", ()=> {
+    const regex = /^C[A L K Y ] [\d\s]{5,10}/;
+
+    assert.equal(true, regex.test('CA 123 333'))
+    assert.equal(true, regex.test('CL 123 333'))
+    assert.equal(true, regex.test('CK 123 333'))
+    assert.equal(true, regex.test('CY 123 333'))
+
+
+    assert.equal(false, regex.test('HG 123 333'))
+    assert.equal(true, regex.test('CL 120 333'))
+  })
+
   after(function () {
     pool.end();
   });

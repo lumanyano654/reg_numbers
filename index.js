@@ -46,32 +46,34 @@ app.use(flash());
 
 app.get("/", async function (req, res) {
   var reg_numbers = await regNumber.getRegNumbers();
-  res.render("index", {reg_numbers});
+  res.render("index", { reg_numbers });
 });
 
 app.post("/regnumbers", async function (req, res) {
   var town = req.body.reg_input;
-  var town = town.toUpperCase();
-  var checkDuplicates = await regNumber.checkDuplicates(town);
+  town = town.toUpperCase();
 
-  if (town.length > 10) {
-    req.flash("info", "Your registration must have less characters");
-  } else if (checkDuplicates !== 0) {
-    req.flash("info", "registration number already exists");
-  } else if (town == "") {
-    req.flash("info", "Enter registration number");
-  } else if (town) {
-    await regNumber.addRegNumber(town);
-  } else if (
-    !town.startsWith("1 ") ||
-    !town.startsWith("2 ") ||
-    !town.startsWith("3 ")
-  ) {
-    req.flash("info", "This is not a registration number");
+  // var checkDuplicates = await regNumber.checkDuplicates(town);
+  const addRegistration = await regNumber.addRegNumber(town);
+
+  switch (addRegistration) {
+    case 1:
+      req.flash("info", "Enter registration number");
+      break;
+    case 2:
+      req.flash("info", "Please enter valid registration");
+      break;
+    case 3:
+      req.flash("info", "Your registration must have less characters");
+      break;
+    case 4:
+      req.flash("info", "registration number already exists");
+      break;
+    default:
+      req.flash("success", "successfully entered registration");
   }
 
   res.redirect("/");
-  
 });
 
 app.get("/regnumbers", async function (req, res) {

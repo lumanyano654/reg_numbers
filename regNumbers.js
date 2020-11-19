@@ -1,29 +1,42 @@
 module.exports = function regNumbers(pool) {
   
   async function addRegNumber(town) {
+
+    console.log({town});
+    
+    if(town.trim() == "") return 1;
     town = town.toUpperCase();
-
-    var duplicate = await pool.query(
-      "select reg_numbers from registration_numbers where reg_numbers = $1",
-      [town]
-    );
-
-    if (town.length <= 10 ) {
-      if (duplicate.rowCount === 0) {
-        var substring = town.substring(0, 2);
-
-        var townId = await pool.query(
-          "select id from towns where town_id = $1",
-          [substring]
-        );
-
-        const townIds = townId.rows[0].id;
-
-        var town_id = await pool.query(
-          "INSERT INTO registration_numbers(reg_numbers,town_code)values($1, $2)",
-          [town, townIds]
-        );
-      }
+    var lengthString = town.substring(0, 2);
+    var registration = /^C[ALKY] [\d\s]{4,10}/.test(town);
+    
+    if (registration) {
+      var duplicate = await pool.query(
+        "select reg_numbers from registration_numbers where reg_numbers = $1",
+        [town]
+      );
+  
+      if (town.length <= 10 ) {
+        if (duplicate.rowCount === 0) {
+          var townId = await pool.query(
+            "select id from towns where town_id = $1",
+            [lengthString]
+          );
+  
+          const townIds = townId.rows[0].id;
+  
+          var town_id = await pool.query(
+            "INSERT INTO registration_numbers(reg_numbers,town_code)values($1, $2)",
+            [town, townIds]
+          );
+        } else {
+          return 4;
+        }
+      } else {
+        return 3;
+      } 
+      return true;
+    } else {
+      return 2;
     }
   }
 
