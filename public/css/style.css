@@ -1,24 +1,21 @@
 body {
-    box-sizing: border-box;
-    background: linear-gradient(110deg, #fdcd3b 60%, #ffed4b 60%);
+    /* box-sizing: border-box; */
+    border-radius: 3px;
+    border: 3px solid red;
+    background: linear-gradient( #fdcd3b 60%, #ffed4b 60%);
+
 }
 
 .container {
     background-color: transparent;
     text-align: center;
-    border-radius: 3px;
-    
-
-    top: 10%;
-    left: 10%;
-    bottom: 10%;
-    right: 10%;
-
-    animation: draw-line 2s;
-    animation-fill-mode: forwards;
-
+    height: 19cm;
+    width: 90%;
+    word-break: break-word;
 }
-
+/* div{
+    border: 2px solid black;
+} */
 h2 {
     font-weight: 100;
     font-family: Georgia, 'Times New Roman', Times, serif;
@@ -48,7 +45,7 @@ h2 {
     text-align: center;
     border: 0.1em solid darkslategrey;
     float: left;
-    margin-left: 3em;
+    margin-left: 2em;
 
 
 }
@@ -60,22 +57,28 @@ h2 {
 }
 
 li {
-    list-style-type: none;
+
     padding: 10px 10px;
     border: 2px solid black;
     background-color: honeydew;
-    border-radius: 10px;
-    text-align: center;
-    position: relative;
-    left: 8cm;
+    border-radius: 10px;   
+    display: flex;
     bottom: 5cm;
-    display: inline;
-    margin-left: 1em;
-    
+    display: inline-block;
+    margin: 0.5em;
+     
+}
+hr{
+    margin-bottom: 3.5rem;
+    border-width: 0;
+    border-top: 2px solid red;
+    margin-left: 2em;
 }
 
 ul {
-    width: 95%;
+  
+    /* margin: 0px; */
+    padding: 0px;
 }
 
 .flash {
@@ -137,9 +140,8 @@ ul {
 
 .filter {
     float: left;
-    position: relative;
     margin-top: 3em;
-    right: 16em;
+   
 }
 
 select {
