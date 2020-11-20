@@ -4,7 +4,7 @@ var bodyParser = require("body-parser");
 const flash = require("express-flash");
 var session = require("express-session");
 const regNumberFact = require("./regNumbers");
-
+const regNumberRoutesFile = require("./routes")
 const pg = require("pg");
 const Pool = pg.Pool;
 
@@ -21,7 +21,8 @@ process.env.DATABASE_URL;
 
 let app = express();
 
-let regNumber = regNumberFact(pool);
+const regNumber = regNumberFact(pool);
+const regNumbrRoutes = regNumberRoutesFile(regNumber);
 
 app.engine("handlebars", exphbs());
 app.set("view engine", "handlebars");
@@ -44,56 +45,13 @@ app.use(
 
 app.use(flash());
 
-app.get("/", async function (req, res) {
-  var reg_numbers = await regNumber.getRegNumbers();
-  res.render("index", { reg_numbers });
-});
+app.get("/",regNumbrRoutes.home);
 
-app.post("/regnumbers", async function (req, res) {
-  var town = req.body.reg_input;
-  town = town.toUpperCase();
+app.post("/regnumbers",regNumbrRoutes.addedRegistration);
 
-  // var checkDuplicates = await regNumber.checkDuplicates(town);
-  const addRegistration = await regNumber.addRegNumber(town);
+app.get("/regnumbers",regNumbrRoutes.filter);
 
-  switch (addRegistration) {
-    case 1:
-      req.flash("info", "Enter registration number");
-      break;
-    case 2:
-      req.flash("info", "Please enter valid registration");
-      break;
-    case 3:
-      req.flash("info", "Your registration must have less characters");
-      break;
-    case 4:
-      req.flash("info", "registration number already exists");
-      break;
-    default:
-      req.flash("success", "successfully entered registration");
-  }
-
-  res.redirect("/");
-});
-
-app.get("/regnumbers", async function (req, res) {
-  var towns = req.query.selectedTowns;
-
-  console.log(towns);
-
-  var filter = await regNumber.filter(towns);
-  console.log(filter);
-
-  res.render("index", {
-    reg_numbers: filter,
-  });
-});
-
-app.get("/reset", async function (req, res) {
-  await regNumber.reset();
-  req.flash("success", "all data has been successfully cleared");
-  res.redirect("/");
-});
+app.get("/reset",regNumbrRoutes.reset);
 
 let PORT = process.env.PORT || 3001;
 
