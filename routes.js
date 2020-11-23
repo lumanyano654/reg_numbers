@@ -43,7 +43,7 @@ module.exports = function regNumbersRoutes(regNumber) {
   async function reset(req, res) {
     await regNumber.reset();
     req.flash("success", "all data has been successfully cleared");
-    res.redirect("/");
+    res.render("/");
   }
 
   return {

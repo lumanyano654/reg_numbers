@@ -10,12 +10,11 @@ body {
     background-color: transparent;
     text-align: center;
     height: 19cm;
-    width: 90%;
     word-break: break-word;
+    text-align: center;
+    
 }
-/* div{
-    border: 2px solid black;
-} */
+
 h2 {
     font-weight: 100;
     font-family: Georgia, 'Times New Roman', Times, serif;
@@ -27,9 +26,9 @@ h2 {
 }
 
 .textbox {
-    float: left;
+  
     margin-bottom: 3em;
-    margin-left: 5em;
+    
 }
 
 .examples {
@@ -44,9 +43,7 @@ h2 {
     cursor: pointer;
     text-align: center;
     border: 0.1em solid darkslategrey;
-    float: left;
-    margin-left: 2em;
-
+   
 
 }
 
@@ -72,7 +69,7 @@ hr{
     margin-bottom: 3.5rem;
     border-width: 0;
     border-top: 2px solid red;
-    margin-left: 2em;
+   
 }
 
 ul {
@@ -139,7 +136,7 @@ ul {
 }
 
 .filter {
-    float: left;
+    
     margin-top: 3em;
    
 }

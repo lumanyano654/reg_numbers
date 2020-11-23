@@ -26,6 +26,7 @@ const regNumbrRoutes = regNumberRoutesFile(regNumber);
 
 app.engine("handlebars", exphbs());
 app.set("view engine", "handlebars");
+
 app.use(express.static("public"));
 
 app.use(

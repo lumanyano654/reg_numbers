@@ -7,7 +7,7 @@ module.exports = function regNumbers(pool) {
     if(town.trim() == "") return 1;
     town = town.toUpperCase();
     var lengthString = town.substring(0, 2);
-    var registration = /^C[ALKY] [\d\s]{4,10}/.test(town);
+    var registration = /C[ALY]\s\d{3}-\d{3}$|[\d\s]{4,10}$/.test(town);
     
     if (registration) {
       var duplicate = await pool.query(
