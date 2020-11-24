@@ -14,7 +14,6 @@ module.exports = function regNumbers(pool) {
         "select reg_numbers from registration_numbers where reg_numbers = $1",
         [town]
       );
-  
       if (town.length <= 10 ) {
         if (duplicate.rowCount === 0) {
           var townId = await pool.query(

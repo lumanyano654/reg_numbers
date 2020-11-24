@@ -3,6 +3,8 @@ body {
     border-radius: 3px;
     border: 3px solid red;
     background: linear-gradient( #fdcd3b 60%, #ffed4b 60%);
+    
+   
 
 }
 
@@ -155,17 +157,3 @@ select:hover {
     border: 1px solid darkred;
 }
 
-@keyframes draw-line {
-    from {
-        height: 0;
-    }
-
-    50% {
-        border: 1px solid rgb(black);
-    }
-
-    to {
-        height: 100vh;
-        border: 5px solid red;
-    }
-}
